@@ -2,13 +2,11 @@
  * Created by Sergey Krivorotov.
  */
 
-public with sharing class RatesCallout extends Callout{
+public with sharing class RatesCallout extends Callout {
 
-    public RatesCallout(String endpoint, String method, String headerKey, String headerValue) {
-        this.endpoint = endpoint;
-        this.method = method;
-        this.headerKey = headerKey;
-        this.headerValue = headerValue;
+    public RatesCallout(String baseCurrency) {
+        this.endpoint = 'callout:RatesService1/daily/' + baseCurrency + '.json';
+        this.method = HttpMethod.GET;
     }
 
     public override String buildRequestBody() {
@@ -16,6 +14,17 @@ public with sharing class RatesCallout extends Callout{
     }
 
     public override Object parseResponse(String response) {
-        return null;
+        Map<String, RatesCallout.Rate> ratesMap = (Map<String, RatesCallout.Rate>) JSON.deserialize(response, Map<String, RatesCallout.Rate>.class);
+        return ratesMap;
+    }
+
+    public class Rate {
+        public String code;
+        public String alphaCode;
+        public Integer numericCode;
+        public String name;
+        public Decimal rate;
+        public String currentDate;
+        public Decimal inverseRate;
     }
 }

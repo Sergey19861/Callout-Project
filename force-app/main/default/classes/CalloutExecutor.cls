@@ -8,6 +8,7 @@ public with sharing class CalloutExecutor {
         Http http = new Http();
         HttpRequest request = instance.buildHttpRequest();
         HttpResponse response = http.send(request);
+        //add logResult
         return instance.parseResponse(response.getBody());
     }
 

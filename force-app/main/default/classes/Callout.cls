@@ -4,9 +4,8 @@
 
 public abstract with sharing class Callout {
     public String endpoint;
-    public String method; //Enum?
-    public String headerKey; //Enum?
-    public String headerValue;
+    public HttpMethod method;
+    public Map<String, String> headers;
 
     public abstract String buildRequestBody();
     public abstract Object parseResponse(String response);
@@ -14,9 +13,13 @@ public abstract with sharing class Callout {
     public HttpRequest buildHttpRequest() {
         HttpRequest request = new HttpRequest();
         request.setEndpoint(endpoint);
-        request.setMethod(method);
-        request.setHeader(headerKey, headerValue);
-        request.setBody(buildRequestBody());
+        request.setMethod(method.name());
+//        for(String headerKey: headers.keySet()) request.setHeader(headerKey, headers.get(headerKey));
+//        request.setBody(buildRequestBody());
         return request;
+    }
+
+    public void logRequest() {
+        //add all prorerties in IntegrationLog
     }
 }

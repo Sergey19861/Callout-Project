@@ -5,10 +5,11 @@
 public with sharing class CalloutExecutor {
 
     public static Object execute(Callout instance) {
-        Http http = new Http();
         HttpRequest request = instance.buildHttpRequest();
-        HttpResponse response = http.send(request);
-        //add logResult
+        HttpResponse response = instance.countCalloutTime(request);
+        IntegrationLog log = instance.logCallout(request, response);
+
+        System.debug(log);
         return instance.parseResponse(response.getBody());
     }
 

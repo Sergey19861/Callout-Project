@@ -27,4 +27,8 @@ public with sharing class RatesCallout extends Callout {
         public String currentDate;
         public Decimal inverseRate;
     }
+
+    protected override Type getType() {
+        return RatesCallout.class;
+    }
 }

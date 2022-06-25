@@ -10,6 +10,7 @@ public with sharing class RatesCallout extends Callout {
     }
 
     public override String buildRequestBody() {
+        //do not use
         return null;
     }
 

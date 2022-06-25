@@ -23,12 +23,24 @@ private class CalloutExecutorTest {
         Test.startTest();
         Map<String, RatesCallout.Rate> rates = (Map<String, RatesCallout.Rate>)CalloutExecutor.execute(new RatesCallout('usd'));
         CalloutExecutor.insertLogs();
-        Test.stopTest();
         IntegrationLog__c logs = [SELECT Endpoint__c FROM IntegrationLog__c];
+        Test.stopTest();
+
         System.assertEquals('EUR', rates.get('eur').code);
         System.assertEquals(978, rates.get('eur').numericCode);
         System.assertNotEquals('USD', rates.get('eur').alphaCode);
         System.assertEquals('callout:RatesService1/daily/usd.json', logs.Endpoint__c);
+    }
+
+    @IsTest
+    static void testInsertLogNegative() {
+        String result = '';
+        try {
+            CalloutExecutor.insertLogs();
+        } catch (Exception e) {
+            result = e.getMessage();
+        }
+        System.assert(result.contains('Empty Logs List'), 'Logs are not empty');
     }
 
 }

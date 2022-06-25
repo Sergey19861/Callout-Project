@@ -3,6 +3,9 @@
  */
 
 public with sharing class CalloutExecutor {
+
+    public class CalloutExecutorException extends Exception {}
+
     private static List<IntegrationLog__c> logsList = new List<IntegrationLog__c>();
 
     public static Object execute(Callout callout) {
@@ -14,10 +17,14 @@ public with sharing class CalloutExecutor {
     }
 
     public static void insertLogs() {
-        try {
-            insert logsList;
-        } catch (DmlException e) {
-            System.debug('DML Error: ' + e.getMessage() + '. ' + e.getStackTraceString());
+        if (logslist.size() > 0) {
+            try {
+                insert logsList;
+            } catch(DmlException e) {
+                System.debug('DML Error: ' + e.getMessage() + '. ' + e.getStackTraceString());
+            }
+        } else {
+            throw new CalloutExecutorException('Empty Logs List. Size: ' + logsList.size());
         }
     }
 

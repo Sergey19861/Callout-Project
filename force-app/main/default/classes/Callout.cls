@@ -4,8 +4,7 @@
 
 public abstract with sharing class Callout {
 
-    public class CustomCalloutException extends Exception {
-    }
+    public class CustomCalloutException extends Exception {}
 
     public String endpoint;
     public HttpMethod method;

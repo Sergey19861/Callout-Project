@@ -5,16 +5,30 @@
 @IsTest
 private class CalloutExecutorTest {
 
-
     @IsTest
-    static void testBehavior() {
-        MockFactory mock = new MockFactory(200, 'OK', 'I found it!', new Map<String,String>());
+    static void testExecute() {
+        String responseBody = '{' +
+                '"eur": {' +
+                '"code": "EUR",' +
+                '"alphaCode": "EUR",' +
+                '"numericCode": "978",' +
+                '"name": "Euro",' +
+                '"rate": 0.95107140705398,' +
+                '"date": "Thu, 23 Jun 2022 23:55:02 GMT",' +
+                '"inverseRate": 1.051445761678' +
+                '}' +
+            '}';
+        MockFactory mock = new MockFactory(200, 'OK', responseBody, new Map<String,String>());
         Test.setMock(HttpCalloutMock.class, mock);
-        List<RatesCallout.Rate> result;
-        RatesCallout newCallout = new RatesCallout('usd');
         Test.startTest();
-//        result = ExternalSearch.googleIt('epic search');
+        Map<String, RatesCallout.Rate> rates = (Map<String, RatesCallout.Rate>)CalloutExecutor.execute(new RatesCallout('usd'));
+        CalloutExecutor.insertLogs();
         Test.stopTest();
- //       system.assertEquals('I found it!', result);
+        IntegrationLog__c logs = [SELECT Endpoint__c FROM IntegrationLog__c];
+        System.assertEquals('EUR', rates.get('eur').code);
+        System.assertEquals(978, rates.get('eur').numericCode);
+        System.assertNotEquals('USD', rates.get('eur').alphaCode);
+        System.assertEquals('callout:RatesService1/daily/usd.json', logs.Endpoint__c);
     }
+
 }

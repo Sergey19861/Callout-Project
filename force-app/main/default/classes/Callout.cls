@@ -4,7 +4,8 @@
 
 public abstract with sharing class Callout {
 
-    public class CustomCalloutException extends Exception {}
+    public class CustomCalloutException extends Exception {
+    }
 
     public String endpoint;
     public HttpMethod method;
@@ -13,6 +14,7 @@ public abstract with sharing class Callout {
 
     public abstract String buildRequestBody();
     public abstract Object parseResponse(String response);
+    protected abstract Type getType();
 
     public HttpRequest buildHttpRequest() {
         HttpRequest request = new HttpRequest();
@@ -25,13 +27,13 @@ public abstract with sharing class Callout {
         return request;
     }
 
-    public IntegrationLog logCallout(HttpRequest request, HttpResponse response) {
-        IntegrationLog log = new IntegrationLog();
-        log.calloutType = getType();
-        log.endpoint = request.getEndpoint();
-        log.request = request;
-        log.response = response;
-        log.executionTime = calloutTime;
+    public IntegrationLog__c logCallout(HttpRequest request, HttpResponse response) {
+        IntegrationLog__c log = new IntegrationLog__c();
+        log.CalloutType__c = getType().toString();
+        log.Endpoint__c = request.getEndpoint();
+        log.Request__c = request.toString();
+        log.Response__c = response.toString();
+        log.ExecutionTime__c = calloutTime;
         return log;
     }
 
@@ -42,7 +44,5 @@ public abstract with sharing class Callout {
         calloutTime = System.now().getTime() - startTime;
         return response;
     }
-
-    protected abstract Type getType();
 
 }

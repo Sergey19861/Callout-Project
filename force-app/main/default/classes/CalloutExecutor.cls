@@ -1,10 +1,12 @@
 /**
  * Created by Sergey Krivorotov.
+ *
+ * Designed to execute callout and log creation.
  */
 
 public with sharing class CalloutExecutor {
 
-    public class CalloutExecutorException extends Exception {}
+    private class CalloutExecutorException extends Exception {}
 
     private static List<IntegrationLog__c> logsList = new List<IntegrationLog__c>();
 

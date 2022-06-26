@@ -1,12 +1,14 @@
 /**
  * Created by Sergey Krivorotov.
+ *
+ * Designed to integrate org with www.floatrates.com
  */
 
 public with sharing class RatesCallout extends Callout {
 
     public RatesCallout(String baseCurrency) {
         this.endpoint = 'callout:RatesService1/daily/' + baseCurrency + '.json';
-        this.method = HttpMethod.GET;
+        this.method = CalloutMethodConstatnts.GET_METHOD;
     }
 
     public override String buildRequestBody() {

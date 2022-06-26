@@ -1,12 +1,14 @@
 /**
  * Created by Sergey Krivorotov.
+ *
+ * Parent class for all Callouts. Extend this class to implement Callouts for CalloutExecutor.
  */
 
 public abstract with sharing class Callout {
 
-    public String endpoint;
-    public HttpMethod method;
-    public Map<String, String> headers;
+    protected String endpoint;
+    protected String method;
+    protected Map<String, String> headers;
     private Long calloutTime;
 
     public abstract String buildRequestBody();
@@ -16,11 +18,12 @@ public abstract with sharing class Callout {
     public HttpRequest buildHttpRequest() {
         HttpRequest request = new HttpRequest();
         request.setEndpoint(endpoint);
-        request.setMethod(method.name());
+        request.setMethod(method);
         if (headers != null) {
             for (String headerKey : headers.keySet()) request.setHeader(headerKey, headers.get(headerKey));
             request.setBody(buildRequestBody());
         }
+        System.debug('Request: ' + request.getEndpoint() + '\n' + request.getMethod() + '\n' + request.getBody());
         return request;
     }
 

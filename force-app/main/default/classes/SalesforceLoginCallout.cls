@@ -1,7 +1,7 @@
 /**
  * Created by Sergey Krivorotov.
  *
- *Desined to get sessionId.
+ *Designed to login in Salesforce Scratch org and get sessionId.
  */
 
 public with sharing class SalesforceLoginCallout extends Callout{

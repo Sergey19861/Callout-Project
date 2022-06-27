@@ -17,6 +17,7 @@ public with sharing class SalesforceService {
     public void createAccount(Map<String, String> fieldsAndValues) {
         String sessionId = getSessionId(userName, password);
         CalloutExecutor.execute(new CalloutSobject(sessionId, 'Account', fieldsAndValues));
+        CalloutExecutor.insertLogs();
     }
 
     private String getSessionId(String userName, String password) {

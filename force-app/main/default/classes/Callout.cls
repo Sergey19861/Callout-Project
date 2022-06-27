@@ -44,6 +44,5 @@ public abstract with sharing class Callout {
         }
         return body;
     }
-//permset + , set Success filed, test+, create SalesforceService with method createAccount(String name)+; calloutSobject+,
-//delete redundant folders, add project to Git
+
 }

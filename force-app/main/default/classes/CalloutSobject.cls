@@ -1,8 +1,10 @@
 /**
  * Created by Sergey Krivorotov.
+ *
+ * Contains logic for creating SObjects of different type(with fields and values).
  */
 
-public with sharing class CalloutSobject extends Callout{
+public with sharing class CalloutSobject extends Callout {
 
     private String sessionId;
     private String sObjectApiName;
@@ -53,5 +55,5 @@ public with sharing class CalloutSobject extends Callout{
         }
         return fieldsXml;
     }
-    
+
 }

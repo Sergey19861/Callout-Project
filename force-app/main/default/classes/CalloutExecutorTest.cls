@@ -59,7 +59,7 @@ private class CalloutExecutorTest {
     }
 
     @IsTest
-    static void CreateContactCallout() {
+    static void testSalesforceService() {
         String responseBody = '<soapenv:Body>' +
                 '<createResponse>' +
                 '<result>' +
@@ -71,24 +71,16 @@ private class CalloutExecutorTest {
         MockFactory mock = new MockFactory(200, 'OK', responseBody, new Map<String, String>());
         Test.setMock(HttpCalloutMock.class, mock);
         Test.startTest();
-        String Id = (String) CalloutExecutor.execute(new CreateContactCallout('Test Contact'));
+        SalesforceService service = new SalesforceService('TestUser', 'TestPassword');
+        service.createAccount(new Map<String, String>{
+                'Name' => 'Salesforce Service', 'NumberOfEmployees' => '250'
+        });
         CalloutExecutor.insertLogs();
-        IntegrationLog__c logs = [SELECT Endpoint__c FROM IntegrationLog__c];
+        List<IntegrationLog__c> logs = [SELECT Endpoint__c FROM IntegrationLog__c];
         Test.stopTest();
 
-        System.assertEquals(Id, '0031k00000o81XOAAY');
-        System.assertEquals('callout:SoapService1/', logs.Endpoint__c);
-    }
-
-    @IsTest
-    static void testInsertLogNegative() {
-        String result = '';
-        try {
-            CalloutExecutor.insertLogs();
-        } catch (Exception e) {
-            result = e.getMessage();
-        }
-        System.assert(result.contains('Empty Logs List'), 'Logs are not empty');
+        System.assertEquals(2, logs.size());
+        System.assertEquals('callout:SoapService1/', logs[1].Endpoint__c);
     }
 
 }

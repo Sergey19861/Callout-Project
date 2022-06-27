@@ -12,7 +12,7 @@ public with sharing class SalesforceLoginCallout extends Callout {
                 'PASSWORD' => password
         };
         endpoint = 'callout:SalesforceLoginCallout/';
-        method = CalloutMethodConstatnts.POST_METHOD;
+        method = CalloutMethodConstants.POST_METHOD;
         headers = new Map<String, String>{
                 'Content-Type' => 'text/xml;charset=UTF-8',
                 'SOAPAction' => '""'

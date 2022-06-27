@@ -20,6 +20,7 @@ public with sharing class CalloutExecutor {
             log.ResponseStatus__c = response.getStatus();
             log.Response__c = response.getBody();
             log.ExecutionTime__c = System.now().getTime() - startTime;
+
             return callout.parseResponse(response.getBody());
         } catch (Exception e) {
             log.ErrorMessage__c = e.getMessage() + '\n' + e.getStackTraceString();

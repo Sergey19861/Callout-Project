@@ -31,7 +31,9 @@ public abstract with sharing class Callout {
         }
         String requestBody = buildRequestBody();
         log.Request__c = requestBody;
-        request.setBody(substituteSecretParams(requestBody));
+        if (method != CalloutMethodConstants.GET_METHOD && method != CalloutMethodConstants.DELETE_METHOD) {
+            request.setBody(substituteSecretParams(requestBody));
+        }
         return request;
     }
 
@@ -42,6 +44,6 @@ public abstract with sharing class Callout {
         }
         return body;
     }
-//permset + , set Success filed, test, create SalesforceService with method createAccount(String name)+; calloutSobject+,
+//permset + , set Success filed, test+, create SalesforceService with method createAccount(String name)+; calloutSobject+,
 //delete redundant folders, add project to Git
 }

@@ -8,7 +8,7 @@ public with sharing class RatesCallout extends Callout {
 
     public RatesCallout(String baseCurrency) {
         this.endpoint = 'callout:RatesService1/daily/' + baseCurrency + '.json';
-        this.method = CalloutMethodConstatnts.GET_METHOD;
+        this.method = CalloutMethodConstants.GET_METHOD;
     }
 
     public override String buildRequestBody() {

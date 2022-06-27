@@ -4,7 +4,7 @@
  * Contains constants for callout method.
  */
 
-public with sharing class CalloutMethodConstatnts {
+public with sharing class CalloutMethodConstants {
     public static final String GET_METHOD = 'GET';
     public static final String HEAD_METHOD = 'HEAD';
     public static final String POST_METHOD = 'POST';

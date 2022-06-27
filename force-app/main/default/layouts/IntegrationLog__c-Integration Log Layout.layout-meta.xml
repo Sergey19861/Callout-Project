@@ -11,7 +11,7 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>CalloutType__c</field>
             </layoutItems>
             <layoutItems>
@@ -29,6 +29,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ExecutionTime__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ErrorMessage__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ResponseStatusCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ResponseStatus__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

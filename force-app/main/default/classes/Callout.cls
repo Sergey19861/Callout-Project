@@ -9,40 +9,38 @@ public abstract with sharing class Callout {
     protected String endpoint;
     protected String method;
     protected Map<String, String> headers;
-    private Long calloutTime;
+    protected Map<String, String> secretMap;
+    protected IntegrationLog__c log = new IntegrationLog__c();
 
     public abstract String buildRequestBody();
     public abstract Object parseResponse(String response);
     protected abstract Type getType();
 
-    public HttpRequest buildHttpRequest() {
-        HttpRequest request = new HttpRequest();
-        request.setEndpoint(endpoint);
-        request.setMethod(method);
-        if (headers != null) {
-            for (String headerKey : headers.keySet()) request.setHeader(headerKey, headers.get(headerKey));
-            request.setBody(buildRequestBody());
-        }
-        System.debug('Request: ' + request.getEndpoint() + '\n' + request.getMethod() + '\n' + request.getBody());
-        return request;
-    }
-
-    public IntegrationLog__c logCallout(HttpRequest request, HttpResponse response) {
-        IntegrationLog__c log = new IntegrationLog__c();
-        log.CalloutType__c = getType().toString();
-        log.Endpoint__c = request.getEndpoint();
-        log.Request__c = request.toString();
-        log.Response__c = response.toString();
-        log.ExecutionTime__c = calloutTime;
+    public IntegrationLog__c getLog() {
         return log;
     }
 
-    public HttpResponse countCalloutTime(HttpRequest request) {
-        Http http = new Http();
-        Long startTime = System.now().getTime();
-        HttpResponse response = http.send(request);
-        calloutTime = System.now().getTime() - startTime;
-        return response;
+    public HttpRequest buildHttpRequest() {
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(endpoint);
+        log.CalloutType__c = getType().toString();
+        log.Endpoint__c = request.getEndpoint();
+        request.setMethod(method);
+        if (headers != null) {
+            for (String headerKey : headers.keySet()) request.setHeader(headerKey, headers.get(headerKey));
+        }
+        String requestBody = buildRequestBody();
+        log.Request__c = requestBody;
+        request.setBody(substituteSecretParams(requestBody));
+        return request;
     }
 
+    private String substituteSecretParams(String body) {
+        if (secretMap == null) return body;
+        for (String key : secretMap.keySet()) {
+            body = body.replace('{!' + key + '}', secretMap.get(key));
+        }
+        return body;
+    }
+//permset, set Success filed, test, create SalesforceService with method createAccount(String name); calloutSobject, add project to Git
 }

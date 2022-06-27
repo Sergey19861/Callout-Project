@@ -6,27 +6,33 @@
 
 public with sharing class CalloutExecutor {
 
-    private class CalloutExecutorException extends Exception {}
-
     private static List<IntegrationLog__c> logsList = new List<IntegrationLog__c>();
 
     public static Object execute(Callout callout) {
+        Http http = new Http();
         HttpRequest request = callout.buildHttpRequest();
-        HttpResponse response = callout.countCalloutTime(request);
-        IntegrationLog__c log = callout.logCallout(request, response);
+        IntegrationLog__c log = callout.getLog();
         logsList.add(log);
-        return callout.parseResponse(response.getBody());
+        Long startTime = System.now().getTime();
+        try {
+            HttpResponse response = http.send(request);
+            log.ResponseStatusCode__c = response.getStatusCode();
+            log.ResponseStatus__c = response.getStatus();
+            log.Response__c = response.getBody();
+            log.ExecutionTime__c = System.now().getTime() - startTime;
+            return callout.parseResponse(response.getBody());
+        } catch (Exception e) {
+            log.ErrorMessage__c = e.getMessage() + '\n' + e.getStackTraceString();
+        }
+        return null;
     }
 
     public static void insertLogs() {
-        if (logslist.size() > 0) {
-            try {
-                insert logsList;
-            } catch(DmlException e) {
-                System.debug('DML Error: ' + e.getMessage() + '. ' + e.getStackTraceString());
-            }
-        } else {
-            throw new CalloutExecutorException('Empty Logs List. Size: ' + logsList.size());
+        try {
+            insert logsList;
+            logsList = new List<IntegrationLog__c>();
+        } catch (DmlException e) {
+            System.debug('DML Error: ' + e.getMessage() + '. ' + e.getStackTraceString());
         }
     }
 

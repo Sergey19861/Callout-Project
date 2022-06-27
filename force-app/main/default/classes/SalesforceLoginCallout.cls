@@ -4,17 +4,16 @@
  *Designed to login in Salesforce Scratch org and get sessionId.
  */
 
-public with sharing class SalesforceLoginCallout extends Callout{
-
-    private String userName;
-    private String password;
+public with sharing class SalesforceLoginCallout extends Callout {
 
     public SalesforceLoginCallout(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
+        secretMap = new Map<String, String>{
+                'USER_NAME' => userName,
+                'PASSWORD' => password
+        };
         endpoint = 'callout:SalesforceLoginCallout/';
         method = CalloutMethodConstatnts.POST_METHOD;
-        headers = new Map<String, String> {
+        headers = new Map<String, String>{
                 'Content-Type' => 'text/xml;charset=UTF-8',
                 'SOAPAction' => '""'
         };
@@ -22,24 +21,21 @@ public with sharing class SalesforceLoginCallout extends Callout{
 
     public override String buildRequestBody() {
         return '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:enterprise.soap.sforce.com">' +
-        '<soapenv:Header>' +
-        '</soapenv:Header>' +
-        '<soapenv:Body>' +
-        '<urn:login>' +
-        '<urn:username>' + userName + '</urn:username>' +
-        '<urn:password>' + password + '</urn:password>' +
-        '</urn:login>' +
-        '</soapenv:Body>' +
-        '</soapenv:Envelope>';
+                '<soapenv:Header>' +
+                '</soapenv:Header>' +
+                '<soapenv:Body>' +
+                '<urn:login>' +
+                '<urn:username>{!USER_NAME}</urn:username>' +
+                '<urn:password>{!PASSWORD}</urn:password>' +
+                '</urn:login>' +
+                '</soapenv:Body>' +
+                '</soapenv:Envelope>';
     }
 
     public override Object parseResponse(String response) {
-        System.debug('Response: ' + response);
-        Pattern sessionIdPattern = Pattern.compile('(\b<sessionId>\b)');
-        Matcher sessionIdMatcher = sessionIdPattern.matcher(response);
-        System.debug('Matcher: ' + sessionIdMatcher);
-        System.debug('Result: ' + sessionIdMatcher.matches());
-        return null;
+        String sessionId = response.substring(response.indexOf('<sessionId>') + '<sessionId>'.length(), response.indexOf('</sessionId>'));
+        log.Response__c = log.Response__c.replace(sessionId, 'SESSION_ID_REMOVED');
+        return sessionId;
     }
 
     protected override Type getType() {

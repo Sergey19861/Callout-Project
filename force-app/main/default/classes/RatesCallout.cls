@@ -34,4 +34,5 @@ public with sharing class RatesCallout extends Callout {
     protected override Type getType() {
         return RatesCallout.class;
     }
+
 }

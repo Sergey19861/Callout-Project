@@ -4,9 +4,9 @@
  * Designed to integrate org with www.floatrates.com
  */
 
-public with sharing class RatesCallout extends Callout {
+public with sharing class CalloutRates extends Callout {
 
-    public RatesCallout(String baseCurrency) {
+    public CalloutRates(String baseCurrency) {
         this.endpoint = 'callout:RatesService1/daily/' + baseCurrency + '.json';
         this.method = CalloutMethodConstants.GET_METHOD;
     }
@@ -17,7 +17,7 @@ public with sharing class RatesCallout extends Callout {
     }
 
     public override Object parseResponse(String response) {
-        Map<String, RatesCallout.Rate> ratesMap = (Map<String, RatesCallout.Rate>) JSON.deserialize(response, Map<String, RatesCallout.Rate>.class);
+        Map<String, CalloutRates.Rate> ratesMap = (Map<String, CalloutRates.Rate>) JSON.deserialize(response, Map<String, CalloutRates.Rate>.class);
         return ratesMap;
     }
 
@@ -32,7 +32,7 @@ public with sharing class RatesCallout extends Callout {
     }
 
     protected override Type getType() {
-        return RatesCallout.class;
+        return CalloutRates.class;
     }
 
 }

@@ -8,7 +8,7 @@
 private class CalloutExecutorTest {
 
     @IsTest
-    static void testRatesCallout() {
+    static void testCalloutRates() {
         String responseBody = '{' +
                 '"eur": {' +
                 '"code": "EUR",' +
@@ -23,7 +23,7 @@ private class CalloutExecutorTest {
         MockFactory mock = new MockFactory(200, 'OK', responseBody, new Map<String, String>());
         Test.setMock(HttpCalloutMock.class, mock);
         Test.startTest();
-        Map<String, RatesCallout.Rate> rates = (Map<String, RatesCallout.Rate>) CalloutExecutor.execute(new RatesCallout('usd'));
+        Map<String, CalloutRates.Rate> rates = (Map<String, CalloutRates.Rate>) CalloutExecutor.execute(new CalloutRates('usd'));
         CalloutExecutor.upsertLogs();
         IntegrationLog__c logs = [SELECT Endpoint__c FROM IntegrationLog__c];
         Test.stopTest();

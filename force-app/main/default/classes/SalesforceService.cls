@@ -6,7 +6,8 @@
 
 public with sharing class SalesforceService {
 
-    public class SalesforceServiceException extends Exception {}
+    public class SalesforceServiceException extends Exception {
+    }
 
     private String sessionId;
 

@@ -86,4 +86,25 @@ private class CalloutExecutorTest {
         System.assertEquals('callout:SalesForceOrg/', logs[1].Endpoint__c);
     }
 
+    @IsTest
+    static void testSalesforceServiceNegative() {
+        String result = '';
+        MockFactory mock = new MockFactory(200, 'OK', '', new Map<String, String>());
+        Test.setMock(HttpCalloutMock.class, mock);
+        Test.startTest();
+        try {
+            SalesforceService service = new SalesforceService();
+            service.login('TestUser', 'TestPassword');
+            service.createAccount(new Map<String, String>{
+                    'Name' => 'Salesforce Service', 'NumberOfEmployees' => '250'
+            });
+        } catch (Exception e) {
+            result = e.getMessage();
+            System.debug('Result: ' + result);
+        }
+        Test.stopTest();
+
+        System.assert(result.contains('Session Id is null'), 'Session Id is NOT null');
+    }
+
 }

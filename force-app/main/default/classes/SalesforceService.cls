@@ -1,7 +1,7 @@
 /**
  * Created by Sergey Krivorotov.
  *
- * Designed to create Account records through SOAP protocol.
+ * Designed to create records of sObjects of various types using the SOAP protocol.
  */
 
 public with sharing class SalesforceService {
@@ -14,7 +14,7 @@ public with sharing class SalesforceService {
         if (sessionId != null) {
             CalloutExecutor.execute(new CalloutSFCrerateSObject(sessionId, 'Account', fieldsAndValues));
         } else {
-            throw new SalesforceServiceException('Session Id  is ' + sessionId);
+            throw new SalesforceServiceException('Session Id is ' + sessionId);
         }
     }
 

@@ -9,7 +9,7 @@ public with sharing class SalesforceService {
     private String sessionId;
 
     public void createAccount(Map<String, String> fieldsAndValues) {
-        CalloutExecutor.execute(new SObjectCallout(sessionId, 'Account', fieldsAndValues));
+        CalloutExecutor.execute(new CalloutSFCrerateSObject(sessionId, 'Account', fieldsAndValues));
     }
 
     public void login(String userName, String password) {

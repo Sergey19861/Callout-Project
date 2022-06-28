@@ -4,13 +4,13 @@
  * Contains logic for creating SObjects of different type(with fields and values).
  */
 
-public with sharing class SObjectCallout extends Callout {
+public with sharing class CalloutSFCrerateSObject extends Callout {
 
     private String sessionId;
     private String sObjectApiName;
     private Map<String, String> fieldsAndValues;
 
-    public SObjectCallout(String sessionId, String sObjectApiName, Map<String, String> fieldsAndValues) {
+    public CalloutSFCrerateSObject(String sessionId, String sObjectApiName, Map<String, String> fieldsAndValues) {
         this.sessionId = sessionId;
         this.sObjectApiName = sObjectApiName;
         this.fieldsAndValues = fieldsAndValues;
@@ -45,7 +45,7 @@ public with sharing class SObjectCallout extends Callout {
     }
 
     protected override Type getType() {
-        return SObjectCallout.class;
+        return CalloutSFCrerateSObject.class;
     }
 
     private String buildFiledValueXmlString(Map <String, String> fieldsAndValues) {

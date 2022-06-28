@@ -12,9 +12,9 @@ public with sharing class SalesforceService {
         CalloutExecutor.execute(new CalloutSobject(sessionId, 'Account', fieldsAndValues));
     }
 
-    public String login(String userName, String password) {
-        if (userName == null || password == null) return null;
-        return (String) CalloutExecutor.execute(new SalesforceLoginCallout(userName, password));
+    public void login(String userName, String password) {
+        if (userName == null || password == null) return;
+        sessionId = (String) CalloutExecutor.execute(new SalesforceLoginCallout(userName, password));
     }
 
     public void upsertLogs() {

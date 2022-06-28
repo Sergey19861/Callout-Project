@@ -104,7 +104,7 @@ private class CalloutExecutorTest {
         }
         Test.stopTest();
 
-        System.assert(result.contains('Session Id is null'), 'Session Id is NOT null');
+        System.assert(result.contains('SalesforceService Did Not Login'), 'SalesforceService Login');
     }
 
 }

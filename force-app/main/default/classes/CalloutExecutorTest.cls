@@ -35,7 +35,7 @@ private class CalloutExecutorTest {
     }
 
     @IsTest
-    static void testSalesforceLoginCallout() {
+    static void testCalloutSFLogin() {
         String responseBody = '<soapenv:Body>' +
                 '<loginResponse>' +
                 '<result>' +
@@ -49,7 +49,7 @@ private class CalloutExecutorTest {
         MockFactory mock = new MockFactory(200, 'OK', responseBody, new Map<String, String>());
         Test.setMock(HttpCalloutMock.class, mock);
         Test.startTest();
-        String sessionId = (String) CalloutExecutor.execute(new SalesforceLoginCallout('TestUser', 'TestPassword'));
+        String sessionId = (String) CalloutExecutor.execute(new CalloutSFLogin('TestUser', 'TestPassword'));
         CalloutExecutor.upsertLogs();
         IntegrationLog__c logs = [SELECT Endpoint__c FROM IntegrationLog__c];
         Test.stopTest();

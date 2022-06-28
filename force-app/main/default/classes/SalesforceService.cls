@@ -14,7 +14,7 @@ public with sharing class SalesforceService {
 
     public void login(String userName, String password) {
         if (userName == null || password == null) return;
-        sessionId = (String) CalloutExecutor.execute(new SalesforceLoginCallout(userName, password));
+        sessionId = (String) CalloutExecutor.execute(new CalloutSFLogin(userName, password));
     }
 
     public void upsertLogs() {

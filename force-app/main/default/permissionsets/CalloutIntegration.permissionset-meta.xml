@@ -13,11 +13,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>MockFactory</apexClass>
+        <apexClass>CalloutRates</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>RatesCallout</apexClass>
+        <apexClass>MockFactory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

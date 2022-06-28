@@ -4,9 +4,9 @@
  *Designed to login in Salesforce Scratch org and get sessionId.
  */
 
-public with sharing class SalesforceLoginCallout extends Callout {
+public with sharing class CalloutSFLogin extends Callout {
 
-    public SalesforceLoginCallout(String userName, String password) {
+    public CalloutSFLogin(String userName, String password) {
         secretMap = new Map<String, String>{
                 'USER_NAME' => userName,
                 'PASSWORD' => password
@@ -39,6 +39,6 @@ public with sharing class SalesforceLoginCallout extends Callout {
     }
 
     protected override Type getType() {
-        return SalesforceLoginCallout.class;
+        return CalloutSFLogin.class;
     }
 }

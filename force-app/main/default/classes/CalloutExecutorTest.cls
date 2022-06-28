@@ -24,7 +24,7 @@ private class CalloutExecutorTest {
         Test.setMock(HttpCalloutMock.class, mock);
         Test.startTest();
         Map<String, RatesCallout.Rate> rates = (Map<String, RatesCallout.Rate>) CalloutExecutor.execute(new RatesCallout('usd'));
-        CalloutExecutor.insertLogs();
+        CalloutExecutor.upsertLogs();
         IntegrationLog__c logs = [SELECT Endpoint__c FROM IntegrationLog__c];
         Test.stopTest();
 
@@ -50,7 +50,7 @@ private class CalloutExecutorTest {
         Test.setMock(HttpCalloutMock.class, mock);
         Test.startTest();
         String sessionId = (String) CalloutExecutor.execute(new SalesforceLoginCallout('TestUser', 'TestPassword'));
-        CalloutExecutor.insertLogs();
+        CalloutExecutor.upsertLogs();
         IntegrationLog__c logs = [SELECT Endpoint__c FROM IntegrationLog__c];
         Test.stopTest();
 
@@ -71,11 +71,12 @@ private class CalloutExecutorTest {
         MockFactory mock = new MockFactory(200, 'OK', responseBody, new Map<String, String>());
         Test.setMock(HttpCalloutMock.class, mock);
         Test.startTest();
-        SalesforceService service = new SalesforceService('TestUser', 'TestPassword');
+        SalesforceService service = new SalesforceService();
+        service.login('TestUser', 'TestPassword');
         service.createAccount(new Map<String, String>{
                 'Name' => 'Salesforce Service', 'NumberOfEmployees' => '250'
         });
-        CalloutExecutor.insertLogs();
+        service.upsertLogs();
         List<IntegrationLog__c> logs = [SELECT Endpoint__c FROM IntegrationLog__c];
         Test.stopTest();
 

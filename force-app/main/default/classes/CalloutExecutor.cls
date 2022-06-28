@@ -28,9 +28,9 @@ public with sharing class CalloutExecutor {
         return null;
     }
 
-    public static void insertLogs() {
+    public static void upsertLogs() {
         try {
-            insert logsList;
+            upsert logsList;
             logsList = new List<IntegrationLog__c>();
         } catch (DmlException e) {
             System.debug('DML Error: ' + e.getMessage() + '. ' + e.getStackTraceString());

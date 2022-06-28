@@ -6,23 +6,19 @@
 
 public with sharing class SalesforceService {
 
-    private String userName;
-    private String password;
-
-    public SalesforceService(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-    }
+    private String sessionId;
 
     public void createAccount(Map<String, String> fieldsAndValues) {
-        String sessionId = getSessionId(userName, password);
         CalloutExecutor.execute(new CalloutSobject(sessionId, 'Account', fieldsAndValues));
-        CalloutExecutor.insertLogs();
     }
 
-    private String getSessionId(String userName, String password) {
+    public String login(String userName, String password) {
         if (userName == null || password == null) return null;
         return (String) CalloutExecutor.execute(new SalesforceLoginCallout(userName, password));
+    }
+
+    public void upsertLogs() {
+        CalloutExecutor.upsertLogs();
     }
 
 }

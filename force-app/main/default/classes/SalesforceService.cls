@@ -6,10 +6,16 @@
 
 public with sharing class SalesforceService {
 
+    public class SalesforceServiceException extends Exception {}
+
     private String sessionId;
 
     public void createAccount(Map<String, String> fieldsAndValues) {
-        CalloutExecutor.execute(new CalloutSFCrerateSObject(sessionId, 'Account', fieldsAndValues));
+        if (sessionId != null) {
+            CalloutExecutor.execute(new CalloutSFCrerateSObject(sessionId, 'Account', fieldsAndValues));
+        } else {
+            throw new SalesforceServiceException('Session Id  is ' + sessionId);
+        }
     }
 
     public void login(String userName, String password) {

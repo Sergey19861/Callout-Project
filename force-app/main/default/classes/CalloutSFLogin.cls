@@ -11,7 +11,7 @@ public with sharing class CalloutSFLogin extends Callout {
                 'USER_NAME' => userName,
                 'PASSWORD' => password
         };
-        endpoint = 'callout:SalesforceLoginCallout/';
+        endpoint = 'callout:SalesForceOrg/';
         method = CalloutMethodConstants.POST_METHOD;
         headers = new Map<String, String>{
                 'Content-Type' => 'text/xml;charset=UTF-8',

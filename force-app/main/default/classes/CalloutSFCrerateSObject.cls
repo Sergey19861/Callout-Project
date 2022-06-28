@@ -14,7 +14,7 @@ public with sharing class CalloutSFCrerateSObject extends Callout {
         this.sessionId = sessionId;
         this.sObjectApiName = sObjectApiName;
         this.fieldsAndValues = fieldsAndValues;
-        endpoint = 'callout:SoapService1/';
+        endpoint = 'callout:SalesForceOrg/';
         method = CalloutMethodConstants.POST_METHOD;
         headers = new Map<String, String>{
                 'Content-Type' => 'text/xml;charset=UTF-8',

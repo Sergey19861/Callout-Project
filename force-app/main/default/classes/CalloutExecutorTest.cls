@@ -55,18 +55,20 @@ private class CalloutExecutorTest {
         Test.stopTest();
 
         System.assertEquals(sessionId, 'SESSION_ID_REMOVED');
-        System.assertEquals('callout:SalesforceLoginCallout/', logs.Endpoint__c);
+        System.assertEquals('callout:SalesForceOrg/', logs.Endpoint__c);
     }
 
     @IsTest
     static void testSalesforceService() {
         String responseBody = '<soapenv:Body>' +
-                '<createResponse>' +
+                '<loginResponse>' +
                 '<result>' +
-                '<id>0031k00000o81XOAAY</id>' +
-                '<success>true</success>' +
+                '<passwordExpired>false</passwordExpired>' +
+                '<sandbox>true</sandbox>' +
+                '<sessionId>SESSION_ID_REMOVED</sessionId>' +
+                '<userId>0051k000008XYGGAA4</userId>' +
                 '</result>' +
-                '</createResponse>' +
+                '</loginResponse>' +
                 '</soapenv:Body>';
         MockFactory mock = new MockFactory(200, 'OK', responseBody, new Map<String, String>());
         Test.setMock(HttpCalloutMock.class, mock);
@@ -81,7 +83,7 @@ private class CalloutExecutorTest {
         Test.stopTest();
 
         System.assertEquals(2, logs.size());
-        System.assertEquals('callout:SoapService1/', logs[1].Endpoint__c);
+        System.assertEquals('callout:SalesForceOrg/', logs[1].Endpoint__c);
     }
 
 }

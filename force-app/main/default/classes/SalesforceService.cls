@@ -15,7 +15,7 @@ public with sharing class SalesforceService {
         if (sessionId != null) {
             CalloutExecutor.execute(new CalloutSFCrerateSObject(sessionId, 'Account', fieldsAndValues));
         } else {
-            throw new SalesforceServiceException('SalesforceService did not login');
+            throw new SalesforceServiceException('Service wasn’t logged in');
         }
     }
 

@@ -104,7 +104,7 @@ private class CalloutExecutorTest {
         }
         Test.stopTest();
 
-        System.assert(result.contains('SalesforceService Did Not Login'), 'SalesforceService Login');
+        System.assert(result.contains('Service wasn’t logged in'), 'Service logged in');
     }
 
 }

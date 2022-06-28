@@ -17,11 +17,19 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CalloutSFCrerateSObject</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CalloutSFLogin</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MockFactory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SalesforceLoginCallout</apexClass>
+        <apexClass>SalesforceService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <description>Use to give access to IntegrationLog__c object and logic in CalloutExecutor and Callout classes.</description>

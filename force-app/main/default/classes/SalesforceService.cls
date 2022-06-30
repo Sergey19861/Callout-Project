@@ -13,7 +13,7 @@ public with sharing class SalesforceService {
 
     public void createAccount(Map<String, String> fieldsAndValues) {
         if (sessionId != null) {
-            CalloutExecutor.execute(new CalloutSFCrerateSObject(sessionId, 'Account', fieldsAndValues));
+            CalloutExecutor.execute(new CalloutSFCreateSObject(sessionId, 'Account', fieldsAndValues));
         } else {
             throw new SalesforceServiceException('Service wasn’t logged in');
         }

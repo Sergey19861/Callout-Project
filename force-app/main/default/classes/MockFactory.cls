@@ -1,5 +1,7 @@
 /**
  * Created by Sergey Krivorotov.
+ *
+ * Created to mock Http Callout Response.
  */
 
 @IsTest
@@ -27,4 +29,5 @@ public class MockFactory implements HttpCalloutMock {
         res.setStatus(this.status);
         return res;
     }
+
 }
